@@ -3,6 +3,9 @@
  */
 package org.example;
 
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.*;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,5 +13,8 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+        Graph graph = new SingleGraph("eeeeeeeeeeeeeee");
+        graph.addNode("A");
+        graph.addNode("B");
     }
 }

@@ -23,6 +23,10 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    implementation("org.graphstream:gs-core:2.0")
+    implementation("org.graphstream:gs-algo:2.0")
+    implementation("org.graphstream:gs-ui-javafx:2.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
