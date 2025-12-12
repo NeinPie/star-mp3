@@ -3,8 +3,7 @@
  */
 package org.example;
 
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.*;
+import javafx.application.Application;
 
 public class App {
     public String getGreeting() {
@@ -12,9 +11,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-        Graph graph = new SingleGraph("eeeeeeeeeeeeeee");
-        graph.addNode("A");
-        graph.addNode("B");
+        //System.out.println(new App().getGreeting());
+        Application.launch(Tutorial1.class, args);
     }
 }

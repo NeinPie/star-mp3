@@ -1,0 +1,6 @@
+#mainRoot {
+    -fx-background-image: url("/img/background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover; /* füllt die gesamte Fläche */
+    -fx-background-position: center;
+}

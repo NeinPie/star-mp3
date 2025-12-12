@@ -7,14 +7,24 @@
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
-    application
+    id 'application'
 }
-
+application {
+    mainClass = "StartApp"
+}
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
-
+def osName = System.getProperty("os.name").toLowerCase()
+def osClassifier = ''
+if (osName.contains('win')) {
+    osClassifier = 'win'
+} else if (osName.contains('mac')) {
+    osClassifier = 'mac'
+} else if (osName.contains('linux')) {
+    osClassifier = 'linux'
+}
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
@@ -24,9 +34,18 @@ dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
 
+    // Implementation von GraphStream
     implementation("org.graphstream:gs-core:2.0")
     implementation("org.graphstream:gs-algo:2.0")
     implementation("org.graphstream:gs-ui-javafx:2.0")
+
+    //Implementation von JavaFX
+    implementation "org.openjfx:javafx-base:21.0.1:${osClassifier}"
+    implementation "org.openjfx:javafx-controls:21.0.1:${osClassifier}"
+    implementation "org.openjfx:javafx-graphics:21.0.1:${osClassifier}"
+    implementation "org.openjfx:javafx-fxml:21.0.1:${osClassifier}"
+    implementation "org.openjfx:javafx-swing:21.0.1:${osClassifier}"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -41,7 +60,11 @@ application {
     mainClass = "org.example.App"
 }
 
-tasks.named<Test>("test") {
+tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+tasks.withType(JavaExec) {
+    systemProperty "java.awt.headless", "false"
+    jvmArgs "-Dprism.forceGPU=false"
 }
