@@ -1,0 +1,18 @@
+graph{
+    fill-color: #060515;
+}
+node {
+    shape: box;
+    fill-color: yellow;
+}
+
+/*node.pictureNode {
+    shape: image;
+    size: 50px;
+    fill-image: url("img/star-yellow.png");
+}*/
+
+edge{
+    fill-color:#ffffff;
+    size: 0.75px;
+}

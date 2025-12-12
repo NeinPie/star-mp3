@@ -10,6 +10,7 @@ import visual.controller.ControllerBase;
 import visual.controller.MainController;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

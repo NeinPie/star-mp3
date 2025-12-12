@@ -2,6 +2,8 @@ package visual.controller;
 
 import visual.views.MainView;
 
+import java.io.IOException;
+
 public class MainController extends ControllerBase{
 
     public MainController() {
