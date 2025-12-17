@@ -4,9 +4,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.stream.ProxyPipe;
+import org.graphstream.stream.Source;
 import org.graphstream.ui.fx_viewer.FxViewPanel;
 import org.graphstream.ui.fx_viewer.FxViewer;
 import org.graphstream.ui.graphicGraph.GraphicGraph;
+import org.graphstream.ui.view.GraphRenderer;
 import org.graphstream.ui.view.LayerRenderer;
 
 import java.awt.*;
@@ -15,6 +18,8 @@ import java.awt.image.ImageProducer;
 import java.io.IOException;
 import java.io.InputStream;
 import javafx.scene.image.Image;
+import org.graphstream.ui.view.Viewer;
+
 import java.nio.charset.StandardCharsets;
 
 public class MainView extends BorderPane {
@@ -23,16 +28,13 @@ public class MainView extends BorderPane {
         this.setId("mainRoot");
 
         Graph graph = new SingleGraph("Graph");
-        graph.addNode("A");
-        graph.addNode("B" );
-        graph.addNode("C" );
-        graph.addNode("D");
-        graph.addEdge("AB", "A", "B");
-        graph.addEdge("BC", "B", "C");
-        graph.addEdge("CA", "C", "A");
-        graph.addEdge("CB", "C", "D");
-        graph.addEdge("CC", "D", "A");
-        graph.addEdge("CD", "D", "D");
+
+        FxViewer viewer = new FxViewer(graph, FxViewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+
+        FxViewPanel panel = (FxViewPanel) viewer.addDefaultView(false);
+        panel.setStyle("-fx-background-color: transparent;");
+        this.setCenter(panel);
+
 
         InputStream cssStream = getClass().getResourceAsStream("/graph-style.css");
         if(cssStream != null) {
@@ -47,14 +49,15 @@ public class MainView extends BorderPane {
             System.out.println("CSS nicht gefunden.");
         }
 
-        System.setProperty("org.graphstream.ui", "javafx");
-        FxViewer viewer = new FxViewer(graph, FxViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        graph.addNode("A");
+        graph.addNode("B");
+        graph.addNode("C");
+        graph.addEdge("AB", "A", "B");
+        graph.addEdge("BC", "B", "C");
+        graph.addEdge("CA", "C", "A");
         viewer.enableAutoLayout();
 
-        FxViewPanel panel = (FxViewPanel) viewer.addDefaultView(false);
+        this.setStyle("-fx-background-color: transparent;");
 
-
-        this.setCenter(panel);
-        //this.setBottom(new Label("unten"));
     }
 }

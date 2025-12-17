@@ -1,8 +1,9 @@
-graph{
-    fill-color: #060515;
+graph {
+    fill-mode: plain;
+    fill-color: rgba(0, 0, 0, 0);
 }
 node {
-    shape: box;
+    shape: circle;
     fill-color: yellow;
 }
 

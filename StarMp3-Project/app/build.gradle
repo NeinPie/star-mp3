@@ -15,6 +15,7 @@ application {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 def osName = System.getProperty("os.name").toLowerCase()
 def osClassifier = ''
@@ -35,9 +36,9 @@ dependencies {
     implementation(libs.guava)
 
     // Implementation von GraphStream
-    implementation("org.graphstream:gs-core:2.0")
-    implementation("org.graphstream:gs-algo:2.0")
-    implementation("org.graphstream:gs-ui-javafx:2.0")
+    implementation "com.github.graphstream:gs-core:2.0-alpha"
+    implementation "com.github.graphstream:gs-algo:2.0-alpha"
+    implementation "com.github.graphstream:gs-ui-javafx:2.0-alpha"
 
     //Implementation von JavaFX
     implementation "org.openjfx:javafx-base:21.0.1:${osClassifier}"
