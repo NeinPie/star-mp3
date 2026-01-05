@@ -1,63 +1,50 @@
-//package visual.views;
-//
-//import javafx.scene.control.Label;
-//import javafx.scene.layout.*;
-//import org.graphstream.graph.Graph;
-//import org.graphstream.graph.implementations.SingleGraph;
-//import org.graphstream.stream.ProxyPipe;
-//import org.graphstream.stream.Source;
-//import org.graphstream.ui.fx_viewer.FxViewPanel;
-//import org.graphstream.ui.fx_viewer.FxViewer;
-//import org.graphstream.ui.graphicGraph.GraphicGraph;
-//import org.graphstream.ui.view.GraphRenderer;
-//import org.graphstream.ui.view.LayerRenderer;
-//
-//import java.awt.*;
-//import java.awt.image.ImageObserver;
-//import java.awt.image.ImageProducer;
-//import java.io.IOException;
-//import java.io.InputStream;
-//import javafx.scene.image.Image;
-//import org.graphstream.ui.view.Viewer;
-//
-//import java.nio.charset.StandardCharsets;
-//
-//public class MainView extends BorderPane {
-//
-//    public MainView() {
-//        this.setId("mainRoot");
-//
-//        Graph graph = new SingleGraph("Graph");
-//
-//        FxViewer viewer = new FxViewer(graph, FxViewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
-//
-//        FxViewPanel panel = (FxViewPanel) viewer.addDefaultView(false);
-//        panel.setStyle("-fx-background-color: transparent;");
-//        this.setCenter(panel);
-//
-//
-//        InputStream cssStream = getClass().getResourceAsStream("/graph-style.css");
-//        if(cssStream != null) {
-//            String cssText="";
-//            try{
-//                cssText = new String(cssStream.readAllBytes(), StandardCharsets.UTF_8);
-//                graph.setAttribute("ui.stylesheet", cssText);
-//            } catch (IOException e) {
-//                System.out.println("ERROR: CSS File "+cssText + " konnte nicht gefunden werden");
-//            }
-//        } else {
-//            System.out.println("CSS nicht gefunden.");
-//        }
-//
-//        graph.addNode("A");
-//        graph.addNode("B");
-//        graph.addNode("C");
-//        graph.addEdge("AB", "A", "B");
-//        graph.addEdge("BC", "B", "C");
-//        graph.addEdge("CA", "C", "A");
-//        viewer.enableAutoLayout();
-//
-//        this.setStyle("-fx-background-color: transparent;");
-//
-//    }
-//}
+package visual.views;
+
+import com.brunomnsilva.smartgraph.graph.Graph;
+import com.brunomnsilva.smartgraph.graph.GraphEdgeList;
+import com.brunomnsilva.smartgraph.graphview.SmartCircularSortedPlacementStrategy;
+import com.brunomnsilva.smartgraph.graphview.SmartGraphPanel;
+import com.brunomnsilva.smartgraph.graphview.SmartPlacementStrategy;
+import javafx.geometry.Insets;
+import javafx.scene.layout.*;
+
+public class MainView extends BorderPane {
+
+    public MainView() {
+        this.setId("mainRoot");
+        Graph<String, String> g = new GraphEdgeList<>();
+
+        // Knoten
+        g.insertVertex("A");
+        g.insertVertex("B");
+        g.insertVertex("C");
+
+        // Kanten
+        g.insertEdge("A", "B", "AB");
+        g.insertEdge("B", "C", "BC");
+        g.insertEdge("C", "A", "CA");
+
+        SmartPlacementStrategy placement =
+                new SmartCircularSortedPlacementStrategy();
+
+        SmartGraphPanel<String, String> graphView =
+                new SmartGraphPanel<>(g, placement);
+
+        graphView.setPrefSize(600, 400);
+        StackPane graphWrapper = new StackPane(graphView);
+        graphWrapper.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+
+
+        BorderPane.setMargin(graphWrapper, new Insets(10));
+        this.setCenter(graphWrapper);
+
+        //init muss nach Erstellung des Unterliegenden Pane aufgerufen werden
+        graphView.layoutBoundsProperty().addListener((obs, oldBounds, newBounds) -> {
+            if (newBounds.getWidth() > 0 && newBounds.getHeight() > 0) {
+                graphView.init();
+                graphView.update();
+            }
+        });
+
+    }
+}

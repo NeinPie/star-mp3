@@ -11,7 +11,7 @@ plugins {
 }
 
 application {
-    mainClass = 'org.example.Tutorial1'
+    mainClass = 'StartApp'
 }
 
 javafx {
