@@ -26,7 +26,6 @@ public class MainView extends BorderPane {
         g.insertVertex("F");
         g.insertVertex("G");
         g.insertVertex("H");
-
         g.insertEdge("Alphabet", "B", "AB");
         g.insertEdge("Alphabet", "C", "AC");
         g.insertEdge("B", "C", "BC");
@@ -41,7 +40,7 @@ public class MainView extends BorderPane {
 //
 //        }
         SmartPlacementStrategy placement =
-                new SmartCircularSortedPlacementStrategy();
+                new SmartRandomPlacementStrategy();
 
         SmartGraphPanel<String, String> graphView = new SmartGraphPanel<>(g, placement);
 

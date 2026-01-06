@@ -47,6 +47,9 @@ dependencies {
 
     // Implementation von GraphStream
     implementation "com.brunomnsilva:smartgraph:2.3.0"
+
+    // .jar files
+    implementation fileTree(dir: '../libs', include: ['*.jar'])
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
