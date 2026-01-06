@@ -1,3 +1,9 @@
+@font-face {
+    font-family: Bricolage;
+    src: url('BricolageGrotesque_72pt-Regular.ttf');
+}
+
+
 /*
 Fläche, auf der der Graph zu sehen ist (SmartGraphPane)
  */
@@ -9,48 +15,28 @@ Fläche, auf der der Graph zu sehen ist (SmartGraphPane)
 Knotenpunkte
  */
 .vertex {
-    -fx-stroke-width: 3;
-    -fx-stroke: #61B5F1;
-    -fx-stroke-type: inside;
-    -fx-fill: #B1DFF7;
+    -fx-fill: gold;
 }
 /*
 Beschriftung der Knoten
  */
 .vertex-label {
-    -fx-font: bold 8pt "sans-serif";
+    -fx-font-family: "Bricolage";
+    -fx-fill: #FFFFFF;
 }
 
 /*
 Kanten
  */
 .edge {
-    -fx-stroke-width: 2;
-    -fx-stroke: #FF6D66;
-    -fx-stroke-dash-array: 2 5 2 5;
+    -fx-stroke-width: 0.75;
+    -fx-stroke: #FFFFFF;
     -fx-fill: transparent;
     -fx-stroke-line-cap: round;
-    -fx-opacity: 0.8;
-}
-
-/*
-Beschriftung der KAnten
- */
-.edge-label {
-    -fx-font: normal 5pt "sans-serif";
 }
 
 .arrow {
     -fx-stroke-width: 2;
     -fx-stroke: #FF6D66;
     -fx-opacity: 0.8;
-}
-
-/* Custom vertex. You should revert any unwanted styling in the default element,
-   style, since custom styles will be appended to the default style */
-.myVertex {
-    -fx-stroke-width: 5;
-    -fx-stroke: green;
-    -fx-stroke-type: inside; /* you should keep this if using arrows */
-    -fx-fill: yellowgreen;
 }

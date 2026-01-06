@@ -2,11 +2,15 @@ package visual.views;
 
 import com.brunomnsilva.smartgraph.graph.Graph;
 import com.brunomnsilva.smartgraph.graph.GraphEdgeList;
+import com.brunomnsilva.smartgraph.graph.Vertex;
 import com.brunomnsilva.smartgraph.graphview.SmartCircularSortedPlacementStrategy;
 import com.brunomnsilva.smartgraph.graphview.SmartGraphPanel;
 import com.brunomnsilva.smartgraph.graphview.SmartPlacementStrategy;
+import com.brunomnsilva.smartgraph.graphview.SmartRandomPlacementStrategy;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class MainView extends BorderPane {
 
@@ -14,16 +18,28 @@ public class MainView extends BorderPane {
         this.setId("mainRoot");
         Graph<String, String> g = new GraphEdgeList<>();
 
-        // Knoten
-        g.insertVertex("A");
+        g.insertVertex("Alphabet");
         g.insertVertex("B");
         g.insertVertex("C");
+        g.insertVertex("D");
+        g.insertVertex("E");
+        g.insertVertex("F");
+        g.insertVertex("G");
+        g.insertVertex("H");
 
-        // Kanten
-        g.insertEdge("A", "B", "AB");
+        g.insertEdge("Alphabet", "B", "AB");
+        g.insertEdge("Alphabet", "C", "AC");
         g.insertEdge("B", "C", "BC");
-        g.insertEdge("C", "A", "CA");
+        g.insertEdge("C", "D", "CD");
+        g.insertEdge("B", "E", "BE");
+        g.insertEdge("F", "D", "DF");
+        g.insertEdge("F", "G", "GF");
+        g.insertEdge("F", "H", "HF");
+        g.insertEdge("H", "C", "HC");
 
+//        for(Vertex<String> vertex : g.vertices()){
+//
+//        }
         SmartPlacementStrategy placement =
                 new SmartCircularSortedPlacementStrategy();
 
