@@ -43,8 +43,7 @@ public class MainView extends BorderPane {
         SmartPlacementStrategy placement =
                 new SmartCircularSortedPlacementStrategy();
 
-        SmartGraphPanel<String, String> graphView =
-                new SmartGraphPanel<>(g, placement);
+        SmartGraphPanel<String, String> graphView = new SmartGraphPanel<>(g, placement);
 
         graphView.setPrefSize(600, 400);
         StackPane graphWrapper = new StackPane(graphView);

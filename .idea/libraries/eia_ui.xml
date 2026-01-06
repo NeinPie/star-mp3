@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="eia_ui">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/eia_ui.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

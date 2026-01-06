@@ -1,5 +1,5 @@
 package visual;
 
 public enum View {
-    MAIN
+    MAIN, SONGSEARCH;
 }

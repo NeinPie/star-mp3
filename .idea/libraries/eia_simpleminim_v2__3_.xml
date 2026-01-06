@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="eia_simpleminim_v2 (3)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/eia_simpleminim_v2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jl1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jsminim.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/jl1.0.1.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -6,8 +6,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import logic.Mp3Player;
 import visual.controller.ControllerBase;
 import visual.controller.MainController;
+import visual.controller.SongSearchController;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
@@ -22,7 +24,7 @@ import static visual.View.*;
 public class GUI extends Application {
     private static Map<View, Pane> panes;
     private static Stage stage;
-    //private Mp3Player player;
+    private Mp3Player player;
 
     public static Map<View, Pane> getPanes() {
         return panes;
@@ -31,12 +33,9 @@ public class GUI extends Application {
     @Override
     public void init() {
         panes = new HashMap<>();
-//        player = new Mp3Player();
+        player = new Mp3Player();
     }
 
-    /**
-     *Festlegen der Grundlegenden Basis
-     */
     @Override
     public void start(Stage stage) {
         final String STYLESHEET = "style.css";
@@ -46,6 +45,10 @@ public class GUI extends Application {
         Pane mainView = homeController.getRoot();
         panes.put(MAIN, mainView);
 
+        ControllerBase songSearchController = new SongSearchController();
+        Pane songSearchView = songSearchController.getRoot();
+        panes.put(SONGSEARCH, songSearchView);
+
 
         /**
          * Aufsetzen der Stage und Szene
@@ -53,7 +56,7 @@ public class GUI extends Application {
         Scene scene = new Scene(mainView, 960, 600);
         scene.getStylesheets().add(getClass().getResource("/"+STYLESHEET).toExternalForm());
         stage.setScene(scene);
-        stage.setTitle("MP3Player");
+        stage.setTitle("SOS");
         stage.show();
     }
 
