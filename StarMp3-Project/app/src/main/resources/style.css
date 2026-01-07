@@ -50,6 +50,29 @@
     -fx-min-height: 36px;
 }
 
+/* PLAY / PAUSE BUTTON */
+#play-button.icon-button-small {
+    -fx-background-size: 30px 30px;
+}
+
+/* PLAY */
+#play-button.icon-button-small.play {
+    -fx-background-image: url("/img/icons/play.png");
+}
+
+#play-button.icon-button-small.play:hover {
+    -fx-background-image: url("/img/icons/playHOVER.png");
+}
+
+/* PAUSE  */
+#play-button.icon-button-small.pause {
+    -fx-background-image: url("/img/icons/stop.png");
+}
+
+#play-button.icon-button-small.pause:hover {
+    -fx-background-image: url("/img/icons/stopHOVER.png");
+}
+
 /* REPEAT BUTTON */
 #repeat-button.icon-button-small {
     -fx-background-image: url("/img/icons/repeat.png");
@@ -84,4 +107,31 @@
 
 #next-button.icon-button-small:hover {
     -fx-background-image: url("/img/icons/skipfwdHOVER.png");
+}
+
+.progress-bar {
+    -fx-pref-width: 400px;
+    -fx-max-width: 400px;
+    -fx-alignment: center;
+}
+
+.progress-bar .progress-slider {
+    -fx-pref-width: 400px;
+    -fx-max-width: 400px;
+      -fx-pref-height: 6px;
+}
+
+.progress-bar .progress-slider .track {
+    -fx-pref-height: 4px;
+    -fx-background-radius: 2px;
+}
+
+.progress-bar .time-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+}
+
+.progress-bar .labels-box {
+    -fx-pref-width: 400px;
+    -fx-max-width: 400px;
 }

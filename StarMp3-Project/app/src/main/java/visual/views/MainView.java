@@ -9,6 +9,7 @@ import visual.views.partials.*;
 public class MainView extends BorderPane {
 
     private final BooleanProperty playing = new SimpleBooleanProperty(false);
+    
 
     public MainView() {
 
@@ -26,10 +27,14 @@ public class MainView extends BorderPane {
         setTop(topRight);
 
         // like, volume
+
+        BottomPanel  bottomPanel = new BottomPanel();
+        setBottom(bottomPanel);
+        
+        /*
         LikeButton likeButton = new LikeButton();
         VolumeButton volumeButton = new VolumeButton();
 
-        BottomButtonPanel graphControl = new BottomButtonPanel();
         HBox bottomBar = new HBox();
         bottomBar.setPadding(new Insets(20));
 
@@ -47,7 +52,7 @@ public class MainView extends BorderPane {
         playing.addListener((obs, oldV, newV) -> {
         setBottom(newV ? graphControl : bottomBar);
         System.out.println("." + newV);
-    }); 
+    }); */
     }
 
     public BooleanProperty playingProperty() {

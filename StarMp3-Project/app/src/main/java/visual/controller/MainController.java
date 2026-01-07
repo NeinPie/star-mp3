@@ -17,6 +17,9 @@ public class MainController extends ControllerBase<MainView> {
         super();
         root = new MainView();
 
+        //bottom bar test
+        //root.playingProperty().set(true);
+
         this.player = player;
         //init();
     }
