@@ -1,13 +1,9 @@
-package visual.ui;
+package visual.views.partials;
 
 import com.brunomnsilva.smartgraph.graph.Graph;
 import com.brunomnsilva.smartgraph.graph.GraphEdgeList;
 import com.brunomnsilva.smartgraph.graphview.*;
 import javafx.geometry.Insets;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.layout.StackPane;
 
 public class GraphViewPane extends StackPane{

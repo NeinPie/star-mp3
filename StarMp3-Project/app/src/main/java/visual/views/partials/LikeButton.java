@@ -1,4 +1,4 @@
-package visual.ui;
+package visual.views.partials;
 
 import javafx.scene.control.Button;
 

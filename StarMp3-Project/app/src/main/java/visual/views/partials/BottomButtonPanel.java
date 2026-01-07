@@ -1,10 +1,8 @@
-package visual.ui;
+package visual.views.partials;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 
 public class BottomButtonPanel extends HBox{
     private final Button nextButton;
