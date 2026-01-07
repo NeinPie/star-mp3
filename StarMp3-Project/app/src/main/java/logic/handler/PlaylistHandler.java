@@ -70,7 +70,7 @@ public class PlaylistHandler {
      * @return Den Pfad, unter dem die mp3 Datei zu finden ist
      */
     public static String getFullMusicPath(String songname){
-        return "app/src/main/resources/music/" + songname + ".mp3";
+        return "src/main/resources/music/" + songname + ".mp3";
     }
 
     /**
