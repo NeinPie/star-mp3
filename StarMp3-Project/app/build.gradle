@@ -45,7 +45,7 @@ dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
 
-    // Implementation von GraphStream
+    // Implementation von JavaFX SmartGraph
     implementation "com.brunomnsilva:smartgraph:2.3.0"
 
     // .jar files

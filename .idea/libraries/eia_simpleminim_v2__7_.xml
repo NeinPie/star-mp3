@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="eia_simpleminim_v2 (7)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/eia_simpleminim_v2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/eia_ui.jar!/" />
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/jl1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/jsminim.jar!/" />
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/minim.jar!/" />
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/mp3agic.jar!/" />
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/mp3spi1.9.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/tritonus_aos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/tritonus_share.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/StarMp3-Project/libs/jl1.0.1.jar!/" />
+    </SOURCES>
+  </library>
+</component>

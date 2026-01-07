@@ -1,17 +1,18 @@
 package logic.entity;
 
+import logic.exception.SongNotExistsException;
+
 import java.util.ArrayList;
 
+/**
+ * Playlist verwaltet eine ArrayList<Song> von Songs und den Namen der Playlist.
+ */
 public class Playlist {
     private String name;
     private ArrayList<Song> songs = new ArrayList<>();
 
-    public Playlist(String name) {
-        this.name = name;
-    }
-
-    public Playlist() {
-        this.name = "Playlist ";
+    public Playlist(){
+        this.name = "Playlist";
     }
 
     public Playlist(String name, ArrayList<Song> stringSongArrayList) {
@@ -23,38 +24,31 @@ public class Playlist {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void addSong(String songname) {
-    }
-
     public ArrayList<Song> getSongs() {
         return songs;
     }
 
-    public void addSongs(ArrayList<Song> songs) {
-        this.songs.addAll(songs);
-    }
-
-    public Song searchFor(String songname) {
-        for (int i = 0; i < songs.size(); i++) {
+    public Song searchFor(String songname){
+        for(int i = 0; i < songs.size(); i++){
             Song song = songs.get(i);
-            if (song.getTITLE().contains(songname)) {
+            if(song.getTITLE().contains(songname)){
                 return song;
             }
         }
-        //TODO: throw new SongNotExistsException("Song " +songname + " existiert nicht");
-        return null; //delete
+        throw new SongNotExistsException("Song " +songname + " existiert nicht");
     }
 
-    public String toString() {
+    /**
+     * @return String-Version der Playlist
+     */
+    @Override
+    public String toString(){
         String output = "\"" + this.name + "\" [Playlist]\n";
-        for (Song song : songs) {
-            output += "\t" + song.getTITLE() + "\n";
+        for(Song song : songs){
+            output += "\t" +song.getTITLE() + "\n";
         }
         output += "\n";
         return output;
     }
+
 }

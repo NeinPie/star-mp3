@@ -8,13 +8,17 @@ import com.brunomnsilva.smartgraph.graphview.SmartGraphPanel;
 import com.brunomnsilva.smartgraph.graphview.SmartPlacementStrategy;
 import com.brunomnsilva.smartgraph.graphview.SmartRandomPlacementStrategy;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MainView extends BorderPane {
+    public Button playButton;
 
     public MainView() {
+        playButton = new Button("Play");
+
         this.setId("mainRoot");
         Graph<String, String> g = new GraphEdgeList<>();
 
@@ -50,7 +54,9 @@ public class MainView extends BorderPane {
 
 
         BorderPane.setMargin(graphWrapper, new Insets(10));
+        this.setBottom(playButton);
         this.setCenter(graphWrapper);
+
 
         //init muss nach Erstellung des Unterliegenden Pane aufgerufen werden
         graphView.layoutBoundsProperty().addListener((obs, oldBounds, newBounds) -> {

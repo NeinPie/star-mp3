@@ -41,11 +41,11 @@ public class GUI extends Application {
         final String STYLESHEET = "style.css";
         this.stage = stage;
 
-        ControllerBase homeController = new MainController();
+        ControllerBase homeController = new MainController(player);
         Pane mainView = homeController.getRoot();
         panes.put(MAIN, mainView);
 
-        ControllerBase songSearchController = new SongSearchController();
+        ControllerBase songSearchController = new SongSearchController(player);
         Pane songSearchView = songSearchController.getRoot();
         panes.put(SONGSEARCH, songSearchView);
 
