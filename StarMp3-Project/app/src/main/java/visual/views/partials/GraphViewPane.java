@@ -36,7 +36,7 @@ public class GraphViewPane extends StackPane{
       // 
 
         SmartPlacementStrategy placement =
-                new SmartCircularSortedPlacementStrategy();
+                new SmartRandomPlacementStrategy();
 
         SmartGraphPanel<String, String> graphView =
                 new SmartGraphPanel<>(g, placement);
