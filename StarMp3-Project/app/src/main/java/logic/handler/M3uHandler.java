@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * M3uHandler liest die Songs der einzelnen Playlists aus den .m3u-Dateien und bietet auch die Option, diese zu bearbeiten.
  */
 public class M3uHandler {
-    public static final String PLAYLIST_PATH = "app/src/main/resources/playlists/";
+    public static final String PLAYLIST_PATH = "src/main/resources/playlists/";
 
     /**
      * Liest Playlist aus .m3u-File ein und stellt die Songs als ArrayList<Song> zur Verfügung

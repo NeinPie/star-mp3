@@ -12,7 +12,7 @@ public abstract class ExceptionBase extends RuntimeException {
     public ExceptionBase(String problem, String message){
         super(message);
         this.problem = problem;
-        new Mp3Alert(Alert.AlertType.ERROR, "Exception", problem, message, 3000);
+        //new Mp3Alert(Alert.AlertType.ERROR, "Exception", problem, message, 3000);
     }
 
     public ExceptionBase(String message) {

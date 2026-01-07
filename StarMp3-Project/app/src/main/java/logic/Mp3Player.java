@@ -133,7 +133,7 @@ public class Mp3Player {
             Song nextSong = queue.get(0);
             if(nextSong == null){
                 System.out.println("Playlist " + playlistName + " beendet.");
-                new Mp3Alert(Alert.AlertType.INFORMATION,"Information","Playlist beendet","Starte eine andere Playlist, um weiterhin Musik zu hören.",5000);
+                //new Mp3Alert(Alert.AlertType.INFORMATION,"Information","Playlist beendet","Starte eine andere Playlist, um weiterhin Musik zu hören.",5000);
             } else {
                 playSong(nextSong.getTITLE(),0);
                 queue.remove(0);
@@ -141,7 +141,7 @@ public class Mp3Player {
             }
         }
 
-        new Mp3Alert(Alert.AlertType.INFORMATION,"Information","Playlist beendet","Starte eine andere Playlist, um weiterhin Musik zu hören.",5000);
+        //new Mp3Alert(Alert.AlertType.INFORMATION,"Information","Playlist beendet","Starte eine andere Playlist, um weiterhin Musik zu hören.",5000);
     }
 
     /**
@@ -158,7 +158,7 @@ public class Mp3Player {
      */
     public void unmixQueue() {
         if (queue.isEmpty() || currentSong == null) {
-            new Mp3Alert(Alert.AlertType.INFORMATION, "Information", "Playlist beendet", "Queue kann nicht geändert werden.", 3000);
+            //new Mp3Alert(Alert.AlertType.INFORMATION, "Information", "Playlist beendet", "Queue kann nicht geändert werden.", 3000);
             return;
         }
 
