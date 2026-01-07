@@ -10,6 +10,7 @@ import logic.Mp3Player;
 import visual.controller.ControllerBase;
 import visual.controller.MainController;
 import visual.controller.SongSearchController;
+import visual.views.MainView;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
@@ -42,7 +43,10 @@ public class GUI extends Application {
         this.stage = stage;
 
         ControllerBase homeController = new MainController();
-        Pane mainView = homeController.getRoot();
+        //Pane mainView = homeController.getRoot();
+        //panes.put(MAIN, mainView);
+
+        MainView mainView = new MainView();  // создаём нашу панель с графом и кнопками
         panes.put(MAIN, mainView);
 
         ControllerBase songSearchController = new SongSearchController();
@@ -58,6 +62,7 @@ public class GUI extends Application {
         stage.setScene(scene);
         stage.setTitle("SOS");
         stage.show();
+        mainView.playingProperty().set(true);
     }
 
 
