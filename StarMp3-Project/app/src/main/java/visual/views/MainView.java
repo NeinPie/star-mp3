@@ -12,12 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import visual.views.partials.ControlBar;
 
 public class MainView extends BorderPane {
-    public Button playButton;
+    public HBox controlBar;
 
     public MainView() {
-        playButton = new Button("Play");
+        controlBar = new ControlBar();
 
         this.setId("mainRoot");
         Graph<String, String> g = new GraphEdgeList<>();
@@ -54,7 +55,7 @@ public class MainView extends BorderPane {
 
 
         BorderPane.setMargin(graphWrapper, new Insets(10));
-        this.setBottom(playButton);
+        this.setBottom(controlBar);
         this.setCenter(graphWrapper);
 
 

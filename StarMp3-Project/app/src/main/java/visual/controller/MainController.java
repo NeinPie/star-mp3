@@ -11,13 +11,13 @@ import java.io.IOException;
 
 public class MainController extends ControllerBase<MainView> {
     private Mp3Player player;
-    Button playButton;
+    private Button playButton;
 
     public MainController(Mp3Player player) {
         super();
         root = new MainView();
 
-        playButton = root.playButton;
+        playButton = root.controlBar.playButton;
 
         this.player = player;
         init();
