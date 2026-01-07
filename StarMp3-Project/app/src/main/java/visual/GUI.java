@@ -1,5 +1,9 @@
 package visual;
 
+import java.io.ByteArrayInputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -7,16 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import logic.Mp3Player;
+import static visual.View.*;
 import visual.controller.ControllerBase;
 import visual.controller.MainController;
 import visual.controller.SongSearchController;
-
-import java.io.ByteArrayInputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import static visual.View.*;
 
 /**
  * Klasse zum Verwalten aller grafischen Elemente
