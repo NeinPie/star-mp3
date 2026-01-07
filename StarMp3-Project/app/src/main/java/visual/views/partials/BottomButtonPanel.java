@@ -10,6 +10,7 @@ public class BottomButtonPanel extends HBox{
     private final Button repeatButton;
     private final Button shuffleButton;
 
+
     public BottomButtonPanel() {
     getStyleClass().add("control-ui");
 

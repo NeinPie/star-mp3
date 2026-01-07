@@ -1,71 +1,56 @@
 package visual.views;
 
-import com.brunomnsilva.smartgraph.graph.Graph;
-import com.brunomnsilva.smartgraph.graph.GraphEdgeList;
-import com.brunomnsilva.smartgraph.graph.Vertex;
-import com.brunomnsilva.smartgraph.graphview.SmartCircularSortedPlacementStrategy;
-import com.brunomnsilva.smartgraph.graphview.SmartGraphPanel;
-import com.brunomnsilva.smartgraph.graphview.SmartPlacementStrategy;
-import com.brunomnsilva.smartgraph.graphview.SmartRandomPlacementStrategy;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import visual.views.partials.ControlBar;
+import visual.views.partials.*;
 
 public class MainView extends BorderPane {
-    public HBox controlBar;
+
+    private final BooleanProperty playing = new SimpleBooleanProperty(false);
 
     public MainView() {
-        controlBar = new ControlBar();
 
-        this.setId("mainRoot");
-        Graph<String, String> g = new GraphEdgeList<>();
+        setId("mainRoot");
 
-        g.insertVertex("Alphabet");
-        g.insertVertex("B");
-        g.insertVertex("C");
-        g.insertVertex("D");
-        g.insertVertex("E");
-        g.insertVertex("F");
-        g.insertVertex("G");
-        g.insertVertex("H");
-        g.insertEdge("Alphabet", "B", "AB");
-        g.insertEdge("Alphabet", "C", "AC");
-        g.insertEdge("B", "C", "BC");
-        g.insertEdge("C", "D", "CD");
-        g.insertEdge("B", "E", "BE");
-        g.insertEdge("F", "D", "DF");
-        g.insertEdge("F", "G", "GF");
-        g.insertEdge("F", "H", "HF");
-        g.insertEdge("H", "C", "HC");
+        //center - graph
+        GraphViewPane graphViewPane = new GraphViewPane();
+        setCenter(graphViewPane);
 
-//        for(Vertex<String> vertex : g.vertices()){
-//
-//        }
-        SmartPlacementStrategy placement =
-                new SmartRandomPlacementStrategy();
+        //settingsButton
+        SettingsButton settingsButton = new SettingsButton();
+        StackPane topRight = new StackPane(settingsButton);
+        StackPane.setAlignment(settingsButton, javafx.geometry.Pos.TOP_RIGHT);
+        topRight.setPadding(new Insets(20));
+        setTop(topRight);
 
-        SmartGraphPanel<String, String> graphView = new SmartGraphPanel<>(g, placement);
+        // like, volume
+        LikeButton likeButton = new LikeButton();
+        VolumeButton volumeButton = new VolumeButton();
 
-        graphView.setPrefSize(600, 400);
-        StackPane graphWrapper = new StackPane(graphView);
-        graphWrapper.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        BottomButtonPanel graphControl = new BottomButtonPanel();
+        HBox bottomBar = new HBox();
+        bottomBar.setPadding(new Insets(20));
 
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        BorderPane.setMargin(graphWrapper, new Insets(10));
-        this.setBottom(controlBar);
-        this.setCenter(graphWrapper);
+        bottomBar.getChildren().addAll(
+                likeButton,   
+                spacer,       
+                volumeButton  
+        );
 
+        setBottom(bottomBar);
 
-        //init muss nach Erstellung des Unterliegenden Pane aufgerufen werden
-        graphView.layoutBoundsProperty().addListener((obs, oldBounds, newBounds) -> {
-            if (newBounds.getWidth() > 0 && newBounds.getHeight() > 0) {
-                graphView.init();
-                graphView.update();
-            }
-        });
+        playing.addListener((obs, oldV, newV) -> {
+        setBottom(newV ? graphControl : bottomBar);
+        System.out.println("." + newV);
+    }); 
+    }
 
+    public BooleanProperty playingProperty() {
+        return playing;
     }
 }

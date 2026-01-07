@@ -17,10 +17,8 @@ public class MainController extends ControllerBase<MainView> {
         super();
         root = new MainView();
 
-        playButton = root.controlBar.playButton;
-
         this.player = player;
-        init();
+        //init();
     }
 
     @Override
