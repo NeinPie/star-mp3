@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public class BottomPanel extends VBox{
+public class BottomPanel extends BorderPane {
 
     public BottomPanel() {
         getStyleClass().add("bottom-bar");
@@ -15,29 +15,27 @@ public class BottomPanel extends VBox{
 
         ProgressBar progressBar = new ProgressBar();
         ControlBar controls = new ControlBar();
-        VBox progressWrapper = new VBox(progressBar);
-        progressWrapper.setPadding(new Insets(50, 0, 0, 0));
-        progressWrapper.setAlignment(Pos.TOP_CENTER);
-
 
         LikeButton likeButton = new LikeButton();
         VolumeButton volumeButton = new VolumeButton();
 
-        BorderPane bottomRow = new BorderPane();
-        bottomRow.setLeft(likeButton);
-        bottomRow.setCenter(controls);
-        bottomRow.setRight(volumeButton);
+        //fortschrittsleiste
+        VBox songControl = new VBox(10);
+        songControl.getChildren().addAll(progressBar, controls);
+        songControl.setAlignment(Pos.CENTER);
 
-        bottomRow.setMaxWidth(Double.MAX_VALUE);
-        bottomRow.setPadding(new Insets(0, 0, 30, 0));
+        setCenter(songControl);
+        BorderPane.setAlignment(songControl, Pos.CENTER);
 
+        //like button
+        setLeft(likeButton);
         BorderPane.setAlignment(likeButton, Pos.CENTER_LEFT);
+        BorderPane.setMargin(likeButton, new Insets(0, 0, 0, 30));
+
+        //lautstärke button
+        setRight(volumeButton);
         BorderPane.setAlignment(volumeButton, Pos.CENTER_RIGHT);
-
-        setAlignment(Pos.CENTER);
-        setFillWidth(true);
-
-        getChildren().addAll(progressWrapper, bottomRow);
+        BorderPane.setMargin(volumeButton, new Insets(0, 30, 0, 0));
     }
 }
 
