@@ -118,20 +118,37 @@
 .progress-bar .progress-slider {
     -fx-pref-width: 400px;
     -fx-max-width: 400px;
-      -fx-pref-height: 6px;
+    -fx-pref-height: 6px;
 }
 
 .progress-bar .progress-slider .track {
     -fx-pref-height: 4px;
     -fx-background-radius: 2px;
+    -fx-background-color: rgba(255,255,255,0.4);
 }
+
+.progress-bar .thumb{
+    -fx-background-color: white;
+    -fx-pref-height: 18px;
+    -fx-max-height: 18px;
+    -fx-min-height: 18px;
+    -fx-pref-width: 18px;
+    -fx-max-width: 18px;
+    -fx-min-width: 18px;
+}
+
 
 .progress-bar .time-label {
     -fx-font-size: 11px;
     -fx-text-fill: white;
 }
 
+
 .progress-bar .labels-box {
     -fx-pref-width: 400px;
     -fx-max-width: 400px;
+}
+.bottom-bar {
+    -fx-background-image: url("/img/bottom-bar.PNG");
+    -fx-background-size: 960px 100px;
 }

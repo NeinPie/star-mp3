@@ -42,7 +42,7 @@ public class GraphViewPane extends StackPane{
                 new SmartGraphPanel<>(g, placement);
         
 
-        graphView.setPrefSize(700, 500);
+        graphView.setPrefSize(700, 400);
 
         getChildren().addAll(graphView);
         setPadding(new Insets(10));
