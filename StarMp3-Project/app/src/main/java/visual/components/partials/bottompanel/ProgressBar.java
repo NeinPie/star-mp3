@@ -1,4 +1,4 @@
-package visual.views.partials;
+package visual.components.partials.bottompanel;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

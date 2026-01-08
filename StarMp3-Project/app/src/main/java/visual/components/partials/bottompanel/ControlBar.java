@@ -1,4 +1,4 @@
-package visual.views.partials;
+package visual.components.partials.bottompanel;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Pos;
@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 
 public class ControlBar extends HBox {
 
-    
+
     private final Button nextButton;
     private final Button playButton;
     private final Button backButton;

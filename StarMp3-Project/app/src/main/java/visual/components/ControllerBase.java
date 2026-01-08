@@ -1,4 +1,4 @@
-package visual.controller;
+package visual.components;
 
 import javafx.scene.layout.Pane;
 
@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
  * @param <PaneType> Typ des Basis-Panes
  */
 public abstract class ControllerBase<PaneType extends Pane> {
-    PaneType root;
+    protected PaneType root;
 
     public abstract void init();
 

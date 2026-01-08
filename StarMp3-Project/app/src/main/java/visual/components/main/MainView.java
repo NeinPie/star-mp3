@@ -1,10 +1,10 @@
-package visual.views;
+package visual.components.main;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
-import visual.views.partials.*;
+import visual.components.partials.bottompanel.BottomPanel;
 
 public class MainView extends BorderPane {
 
@@ -28,7 +28,7 @@ public class MainView extends BorderPane {
 
         // like, volume
 
-        BottomPanel  bottomPanel = new BottomPanel();
+        BottomPanel bottomPanel = new BottomPanel();
         setBottom(bottomPanel);
         
         /*

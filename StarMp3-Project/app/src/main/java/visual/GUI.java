@@ -12,9 +12,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import logic.Mp3Player;
 import static visual.View.*;
-import visual.controller.ControllerBase;
-import visual.controller.MainController;
-import visual.controller.SongSearchController;
+
+import visual.components.ControllerBase;
+import visual.components.main.MainController;
+import visual.components.overview.SongSearchController;
 
 /**
  * Klasse zum Verwalten aller grafischen Elemente

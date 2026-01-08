@@ -1,4 +1,4 @@
-package visual.views.partials;
+package visual.components.main;
 
 import com.brunomnsilva.smartgraph.graph.Graph;
 import com.brunomnsilva.smartgraph.graph.GraphEdgeList;

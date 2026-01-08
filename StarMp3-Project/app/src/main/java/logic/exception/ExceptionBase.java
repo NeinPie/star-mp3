@@ -1,8 +1,5 @@
 package logic.exception;
 
-import javafx.scene.control.Alert;
-import visual.views.partials.Mp3Alert;
-
 /**
  * ExceptionBase dient als Basis für alle geworfenen Exceptions im Programm. Bei Auftritt wird ein MP3Alert ausgelöst, der dem Nutzer angezeigt wird.
  */

@@ -1,4 +1,4 @@
-package visual.views.partials;
+package visual.components.partials;
 
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Alert;

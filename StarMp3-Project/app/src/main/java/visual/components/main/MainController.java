@@ -1,10 +1,10 @@
-package visual.controller;
+package visual.components.main;
 
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import javafx.scene.control.Button;
 import logic.Mp3Player;
-import visual.views.MainView;
+import visual.components.ControllerBase;
 
 import java.io.IOException;
 
