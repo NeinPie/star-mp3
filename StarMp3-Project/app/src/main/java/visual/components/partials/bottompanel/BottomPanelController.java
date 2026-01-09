@@ -1,7 +1,5 @@
 package visual.components.partials.bottompanel;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import logic.Mp3Player;
