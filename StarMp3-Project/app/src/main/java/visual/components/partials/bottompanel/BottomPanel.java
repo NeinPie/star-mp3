@@ -2,22 +2,28 @@ package visual.components.partials.bottompanel;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class BottomPanel extends BorderPane {
+    ControlBar controls;
+    Button volumeButton;
+    Button likeButton;
+    ProgressBar progressBar;
 
     public BottomPanel() {
+        controls = new ControlBar();
+
+        volumeButton = new VolumeButton();
+        likeButton = new LikeButton();
+        progressBar = new ProgressBar();
+
         getStyleClass().add("bottom-bar");
         setPrefHeight(100);
         setMinHeight(100);
         setMaxHeight(100);
-
-        ProgressBar progressBar = new ProgressBar();
-        ControlBar controls = new ControlBar();
-
-        LikeButton likeButton = new LikeButton();
-        VolumeButton volumeButton = new VolumeButton();
 
         //fortschrittsleiste
         VBox songControl = new VBox(10);

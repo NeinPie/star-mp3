@@ -15,7 +15,7 @@ import static visual.View.*;
 
 import visual.components.ControllerBase;
 import visual.components.main.MainController;
-import visual.components.overview.SongSearchController;
+import visual.components.overview.SongOverviewController;
 
 /**
  * Klasse zum Verwalten aller grafischen Elemente
@@ -44,7 +44,7 @@ public class GUI extends Application {
         Pane mainView = homeController.getRoot();
         panes.put(MAIN, mainView);
 
-        ControllerBase songSearchController = new SongSearchController(player);
+        ControllerBase songSearchController = new SongOverviewController(player);
         Pane songSearchView = songSearchController.getRoot();
         panes.put(SONGSEARCH, songSearchView);
 

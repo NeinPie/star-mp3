@@ -4,9 +4,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
-import visual.components.partials.bottompanel.BottomPanel;
+import visual.BorderPaneWithBottomPanelBase;
 
-public class MainView extends BorderPane {
+public class MainView extends BorderPaneWithBottomPanelBase {
 
     private final BooleanProperty playing = new SimpleBooleanProperty(false);
     
@@ -25,11 +25,6 @@ public class MainView extends BorderPane {
         StackPane.setAlignment(settingsButton, javafx.geometry.Pos.TOP_RIGHT);
         topRight.setPadding(new Insets(20));
         setTop(topRight);
-
-        // like, volume
-
-        BottomPanel bottomPanel = new BottomPanel();
-        setBottom(bottomPanel);
         
         /*
         LikeButton likeButton = new LikeButton();

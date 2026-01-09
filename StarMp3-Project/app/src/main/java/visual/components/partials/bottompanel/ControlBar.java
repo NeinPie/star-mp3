@@ -84,4 +84,6 @@ public class ControlBar extends HBox {
     public Button getPlayButton() { return playButton; }
     public Button getNextButton() { return nextButton; }
     public Button getBackButton() { return backButton; }
+    public Button getRepeatButton() { return repeatButton; }
+    public Button getShuffleButton() { return shuffleButton; }
 }
