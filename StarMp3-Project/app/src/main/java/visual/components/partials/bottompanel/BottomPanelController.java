@@ -1,17 +1,22 @@
 package visual.components.partials.bottompanel;
 
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import logic.Mp3Player;
+import logic.handler.M3uHandler;
 import visual.components.ControllerBase;
 import visual.components.partials.bottompanel.elements.ControlBar;
 import visual.components.partials.bottompanel.elements.ProgressBar;
+
+import java.io.IOException;
 
 public class BottomPanelController extends ControllerBase<BottomPanel> {
     private Mp3Player player;
     private ControlBar controlBar;
     private Button volumeButton;
-    private Button likeButton;
+    private ToggleButton likeButton;
     private ProgressBar progressBar;
 
     public BottomPanelController(Mp3Player player) {
@@ -41,13 +46,29 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
     private void initPlayButton(){
         ToggleButton playButton = controlBar.getPlayButton();
 
-        playButton.setOnAction(e -> System.out.println("Playbutton clicked"));
+        playButton.setOnAction(e -> {
+            if(playButton.isSelected()){
+                if(player.getCurrentSong() != null){
+                    System.out.println("Continue playing");
+                    player.play();
+                } else {
+                    //TODO Info für Nutzer das aus allen Random gespielt wird
+                    player.playShuffledPlaylist("AllSongs");
+                    System.out.println("play "+player.getCurrentSong().getTITLE()+" from allsongs");
+                }
+            } else {
+                System.out.println("pause");
+                player.pause();
+            }
+        });
     }
 
     private void initSkipButton(){
         Button skipButton = controlBar.getNextButton();
 
-        skipButton.setOnAction(e -> System.out.println("Skipbutton clicked"));
+        skipButton.setOnAction(e -> {
+            player.skipSong();
+        });
     }
 
     private void initBackButton(){
@@ -73,7 +94,21 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
     }
 
     private void initLikeButton(){
-        likeButton.setOnAction(e -> System.out.println("Like button clicked"));
+        likeButton.setOnAction(e -> {
+            if(player.getCurrentSong() != null) {
+                likeButton.setSelected(M3uHandler.inPlaylist("favorites", player.getCurrentSong().getTITLE()));
+
+                if (likeButton.isSelected()) {
+                    System.out.println("UnLike button aktiv");
+                    player.removeSongFromFavorites();
+                } else {
+                    System.out.println("like button aktiv");
+                    player.addSongToFavorites();
+                }
+            } else {
+                //TODO: Fehler wenn kein song gewählt
+            }
+        });
     }
 
     private void initProgressBar(){

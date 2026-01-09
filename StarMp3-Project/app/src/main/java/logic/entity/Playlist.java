@@ -51,4 +51,12 @@ public class Playlist {
         return output;
     }
 
+    public void addSong(Song song){
+        songs.add(song);
+    }
+
+    public void removeSong(Song song){
+        songs.remove(song);
+    }
+
 }

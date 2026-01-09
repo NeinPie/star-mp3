@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Verwaltet das Laden der Playlists
  */
 public class PlaylistHandler {
-    protected static HashMap<String, Playlist> playlists =new HashMap<>();
+    private static HashMap<String, Playlist> playlists =new HashMap<>();
     private static Playlist allSongs;
 
     /**

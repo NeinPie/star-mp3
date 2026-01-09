@@ -1,8 +1,8 @@
 package visual.components.partials.bottompanel.elements;
 
-import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 
-public class LikeButton extends Button {
+public class LikeButton extends ToggleButton {
 
     public LikeButton() {
         setId("like-button");    

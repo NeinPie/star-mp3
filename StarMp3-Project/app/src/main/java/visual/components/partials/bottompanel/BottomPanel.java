@@ -3,6 +3,7 @@ package visual.components.partials.bottompanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import visual.components.partials.bottompanel.elements.ControlBar;
@@ -13,7 +14,7 @@ import visual.components.partials.bottompanel.elements.VolumeButton;
 public class BottomPanel extends BorderPane {
     ControlBar controls;
     Button volumeButton;
-    Button likeButton;
+    ToggleButton likeButton;
     ProgressBar progressBar;
 
     public BottomPanel() {

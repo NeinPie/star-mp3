@@ -78,24 +78,7 @@ public class M3uHandler {
                 throw new FileWriteException("Lesen der Datei "+FILENAME + " fehlgeschlagen", e.getMessage());
             }
         } else {
-            FileReader reader;
-            String fileContent = "";
-            try{
-                /**
-                 * File wird einmal komplett eingelesen, wenn die Playlist bereits existiert
-                 */
-                reader = new FileReader(FILENAME);
-                BufferedReader bufferedReader = new BufferedReader(reader);
-
-                while(bufferedReader.ready()){
-                    fileContent += bufferedReader.readLine() + "\n";
-                }
-                bufferedReader.close();
-
-                fileContent = fileContent.trim();
-            } catch (IOException e) {
-                throw new FileReadException("Playlist " + playlistName + " konnte nicht erstellt werden", e.getMessage());
-            }
+            String fileContent = getFileContent(playlistName);
 
             FileWriter writer;
 
@@ -126,5 +109,80 @@ public class M3uHandler {
                 throw new FileWriteException("Playlist " + playlistName + " konnte nicht bearbeitet werden.", e.getMessage());
             }
         }
+    }
+
+    public static void removeFromPlaylist(String title, String playlistName){
+        final String FILENAME = M3uHandler.PLAYLIST_PATH+ playlistName + ".m3u";
+        String fileContent = getFileContent(playlistName);
+
+        String[] lines = fileContent.split("\n");
+        String newFileContent = "";
+
+        for(String line : lines){
+            if(line.contains(title)){
+                continue;
+            }
+            newFileContent += line + "\n";
+        }
+        FileWriter writer;
+
+        try
+        {
+            /**
+             * Neuer Content wird in m3u File geschrieben
+             */
+            writer = new FileWriter(FILENAME);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+            bufferedWriter.write(newFileContent);
+
+            bufferedWriter.close();
+
+            if(!title.isEmpty()){
+                System.out.println(FILENAME + " erfolgreich editiert. [Song hinzugefügt: "+ title +"]");
+            } else {
+                System.out.println(FILENAME + " erfolgreich geladen.");
+            }
+        }
+        catch (IOException e)
+        {
+            throw new FileWriteException("Playlist " + playlistName + " konnte nicht bearbeitet werden.", e.getMessage());
+        }
+    }
+
+    public static boolean inPlaylist(String playlistName, String title){
+        String fileContent = getFileContent(playlistName);
+        assert fileContent != null;
+        return fileContent.contains(title);
+    }
+
+    private static String getFileContent(String playlistName){
+        final String FILENAME = M3uHandler.PLAYLIST_PATH+ playlistName + ".m3u";
+
+        File file = new File(FILENAME);
+        if(!file.exists()){
+            //TODO: Fehler: Playlist existiert nicht
+        } else {
+            FileReader reader;
+            String fileContent = "";
+            try {
+                /**
+                 * File wird einmal komplett eingelesen, wenn die Playlist bereits existiert
+                 */
+                reader = new FileReader(FILENAME);
+                BufferedReader bufferedReader = new BufferedReader(reader);
+
+                while (bufferedReader.ready()) {
+                    fileContent += bufferedReader.readLine() + "\n";
+                }
+                bufferedReader.close();
+
+                fileContent = fileContent.trim();
+            } catch (IOException e) {
+                throw new FileReadException("Playlist " + playlistName + " konnte nicht erstellt werden", e.getMessage());
+            }
+            return fileContent;
+        }
+        return null;
     }
 }
