@@ -53,8 +53,7 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
                     player.play();
                 } else {
                     //TODO Info für Nutzer das aus allen Random gespielt wird
-                    player.playShuffledPlaylist("AllSongs");
-                    System.out.println("play "+player.getCurrentSong().getTITLE()+" from allsongs");
+                    player.playPlaylist("AllSongs");
                 }
             } else {
                 System.out.println("pause");
@@ -74,13 +73,17 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
     private void initBackButton(){
         Button backButton = controlBar.getBackButton();
 
-        backButton.setOnAction(e -> System.out.println("Back button clicked"));
+        backButton.setOnAction(e -> {
+            player.skipSongBack();
+        });
     }
 
     private void initShuffleButton(){
         ToggleButton shuffleButton = controlBar.getShuffleButton();
 
-        shuffleButton.setOnAction(e -> System.out.println("Shuffle button clicked"));
+        shuffleButton.setOnAction(e -> {
+            System.out.println("shuffle button clicked");
+        });
     }
 
     private void initRepeatButton(){
