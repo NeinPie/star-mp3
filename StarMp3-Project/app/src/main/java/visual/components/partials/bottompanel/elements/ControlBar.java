@@ -1,18 +1,19 @@
-package visual.components.partials.bottompanel;
+package visual.components.partials.bottompanel.elements;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
 public class ControlBar extends HBox {
 
 
     private final Button nextButton;
-    private final Button playButton;
+    private final ToggleButton playButton;
     private final Button backButton;
-    private final Button repeatButton;
-    private final Button shuffleButton;
+    private final ToggleButton repeatButton;
+    private final ToggleButton shuffleButton;
 
     private BooleanProperty playingProperty;
 
@@ -22,7 +23,7 @@ public class ControlBar extends HBox {
         setSpacing(12);
         setAlignment(Pos.CENTER);
 
-        repeatButton = new Button();
+        repeatButton = new ToggleButton();
         repeatButton.setId("repeat-button");
         repeatButton.getStyleClass().addAll("icon-button-small", "repeatOFF");
 
@@ -30,7 +31,7 @@ public class ControlBar extends HBox {
         backButton.setId("back-button");
         backButton.getStyleClass().addAll("icon-button-small", "back");
 
-        playButton = new Button();
+        playButton = new ToggleButton();
         playButton.setId("play-button");
         playButton.getStyleClass().addAll("icon-button-small", "play");
 
@@ -44,7 +45,7 @@ public class ControlBar extends HBox {
         nextButton.setId("next-button");
         nextButton.getStyleClass().addAll("icon-button-small", "next");
 
-        shuffleButton = new Button();
+        shuffleButton = new ToggleButton();
         shuffleButton.setId("shuffle-button");
         shuffleButton.getStyleClass().addAll("icon-button-small", "shuffleOFF");
 
@@ -81,9 +82,9 @@ public class ControlBar extends HBox {
         shuffle.addListener((o, oldV, newV) -> setShuffleState(newV));
     }
 
-    public Button getPlayButton() { return playButton; }
+    public ToggleButton getPlayButton() { return playButton; }
     public Button getNextButton() { return nextButton; }
     public Button getBackButton() { return backButton; }
-    public Button getRepeatButton() { return repeatButton; }
-    public Button getShuffleButton() { return shuffleButton; }
+    public ToggleButton getRepeatButton() { return repeatButton; }
+    public ToggleButton getShuffleButton() { return shuffleButton; }
 }

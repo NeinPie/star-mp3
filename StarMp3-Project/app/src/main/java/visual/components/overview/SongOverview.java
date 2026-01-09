@@ -1,7 +1,7 @@
 package visual.components.overview;
 
 import javafx.scene.control.Label;
-import visual.BorderPaneWithBottomPanelBase;
+import visual.components.BorderPaneWithBottomPanelBase;
 
 
 public class SongOverview extends BorderPaneWithBottomPanelBase {

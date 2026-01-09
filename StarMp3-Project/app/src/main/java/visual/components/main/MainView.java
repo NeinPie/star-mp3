@@ -4,7 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
-import visual.BorderPaneWithBottomPanelBase;
+import visual.components.BorderPaneWithBottomPanelBase;
 
 public class MainView extends BorderPaneWithBottomPanelBase {
 

@@ -1,4 +1,4 @@
-package visual.components.partials.bottompanel;
+package visual.components.partials.bottompanel.elements;
 
 import javafx.scene.control.Button;
 

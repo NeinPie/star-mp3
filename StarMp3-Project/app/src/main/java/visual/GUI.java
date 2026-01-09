@@ -45,8 +45,8 @@ public class GUI extends Application {
         panes.put(MAIN, mainView);
 
         ControllerBase songSearchController = new SongOverviewController(player);
-        Pane songSearchView = songSearchController.getRoot();
-        panes.put(SONGSEARCH, songSearchView);
+        Pane songOverview = songSearchController.getRoot();
+        panes.put(SONG_OVERVIEW, songOverview);
 
 
         /**
