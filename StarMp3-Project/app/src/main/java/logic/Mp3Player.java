@@ -30,6 +30,7 @@ public class Mp3Player {
     private volatile boolean skipWanted;
     private volatile boolean skipBackWanted;
     private volatile boolean paused;
+    private volatile int indexOfSong;
     private Runnable songCompletelyPlayed;
     private volatile ArrayList<Song> queue;
     private Playlist currentPlaylist;
@@ -40,6 +41,7 @@ public class Mp3Player {
     public Mp3Player(){
         minim = new SimpleMinim(true);
         PlaylistHandler.loadAllSongs();
+        indexOfSong = 0;
         currentVolume = 3;
 
         currentSong = new SimpleObjectProperty<>(this, "currentSong");
@@ -71,11 +73,11 @@ public class Mp3Player {
      */
     public void playShuffledPlaylist(String name){
         if(!PlaylistHandler.getPlaylists().containsKey(name)){
-            PlaylistHandler.loadPlaylist(name);
         } else {
             /**
              * Fügt die Songs der Playlist zur Queue hinzu, mischt diese und Startet das Abspielen
              */
+            PlaylistHandler.loadPlaylist(name);
             currentPlaylist = PlaylistHandler.getPlaylists().get(name);
             queue = currentPlaylist.getSongs();
             Collections.shuffle(queue);
@@ -121,7 +123,15 @@ public class Mp3Player {
                 Song song = iterator.next();
 
                 currentSong.set(song);
-                playSong(song.getTITLE(),0);
+                try {
+                    playSong(song.getTITLE(),0);
+                } catch (InvalidDataException e) {
+                    throw new RuntimeException(e);
+                } catch (UnsupportedTagException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
                 while (true) {
                     if (paused) {
@@ -154,6 +164,7 @@ public class Mp3Player {
 
                     try { Thread.sleep(20); } catch (InterruptedException e) {}
                 }
+                indexOfSong++;
             }
         }).start();
 
@@ -163,42 +174,24 @@ public class Mp3Player {
     /**
      * Mischt die Queue durch
      */
-    public void mixQueue(){
+    public void mixQueue() {
+        printQueue();
         Collections.shuffle(queue);
         printQueue();
     }
+
 
     /**
      * Macht das Mischen der Queue rückgängig und lässt sie ab dem aktuellen Song wieder in der vorherigen Reihenfolge spielen
      */
     public void unmixQueue() {
-        if (queue.isEmpty() || currentSong == null) {
-            //TODO new Mp3Alert(Alert.AlertType.INFORMATION, "Information", "Playlist beendet", "Queue kann nicht geändert werden.", 3000);
-            return;
-        }
-        ArrayList<Song> unshuffled = currentPlaylist.getSongs();
-
-        int index = -1;
-        for (int i = 0; i < unshuffled.size(); i++) {
-            /**
-             * Setzt index auf den Index des aktuellen Songs
-             */
-            if (unshuffled.get(i).getTITLE().equals(currentSong.getValue().getTITLE())) {
-                index = i;
-                break;
-            }
-        }
-        /**
-         * Löscht alle Songs vor bis inklusive des aktuellem Song aus unshuffled
-         */
-        if (index != -1) {
-            unshuffled.subList(0, index).clear();
-        }
-
-
-        queue = new ArrayList<>(unshuffled);
+        printQueue();
+        queue.clear();
+        queue = currentPlaylist.getSongs();
         printQueue();
     }
+
+
 
     /**
      * Funktion zum Ansehen der Queue in der Konsole
@@ -216,7 +209,7 @@ public class Mp3Player {
      * @param songname Name des Songs
      * @param milliseconds Zeitpunkt, ab dem der Song abgespielt werden soll in Millisekunden
      */
-    public void playSong(String songname, int milliseconds){
+    public void playSong(String songname, int milliseconds) throws InvalidDataException, UnsupportedTagException, IOException {
         if(audioPlayer != null &&audioPlayer.isPlaying()){
             audioPlayer.pause();
         }
@@ -226,7 +219,7 @@ public class Mp3Player {
          * Laden + Abspielen des Songs
          */
         audioPlayer = minim.loadMP3File(SONG_PATH);
-        //currentSong = loadSongMetaData(PlaylistHandler.removePathFromSongName(SONG_PATH));
+        currentSong.setValue(loadSongMetaData(PlaylistHandler.removePathFromSongName(SONG_PATH)));
         audioPlayer.play(milliseconds);
         paused = false;
 
@@ -328,6 +321,7 @@ public class Mp3Player {
      */
     public void skipSongBack(){
         skipBackWanted = true;
+        indexOfSong--;
         audioPlayer.pause();
     }
 
@@ -336,6 +330,7 @@ public class Mp3Player {
      */
     public void skipSong(){
         skipWanted = true;
+        indexOfSong++;
         audioPlayer.pause();
     }
 

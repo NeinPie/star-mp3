@@ -80,16 +80,20 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
 
     private void initShuffleButton(){
         ToggleButton shuffleButton = controlBar.getShuffleButton();
-
-        shuffleButton.setOnAction(e -> {
-            System.out.println("shuffle button clicked");
-        });
+        System.out.println("Ich hoffe ich braucht den Shuffle Button noch nicht, der ist noch nicht fertig leider :(");
+//        shuffleButton.setOnAction(e -> {
+//            if(shuffleButton.isSelected()){
+//                player.mixQueue();
+//            } else {
+//                player.unmixQueue();
+//            }
+//        });
     }
 
     private void initRepeatButton(){
         ToggleButton repeatButton = controlBar.getRepeatButton();
 
-        repeatButton.setOnAction(e -> System.out.println("Repeat button clicked"));
+        repeatButton.setOnAction(e -> System.out.println("Repeat button clicked (auch noch nicht fertig)"));
     }
 
     private void initVolumeButton(){
