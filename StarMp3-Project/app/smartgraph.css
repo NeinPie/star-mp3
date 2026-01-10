@@ -15,7 +15,7 @@ Fläche, auf der der Graph zu sehen ist (SmartGraphPane)
 Knotenpunkte
  */
 .vertex {
-    -fx-fill: gold;
+    -fx-fill: transparent;
 }
 /*
 Beschriftung der Knoten

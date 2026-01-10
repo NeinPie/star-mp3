@@ -9,6 +9,7 @@ import ddf.minim.AudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 import javafx.beans.property.SimpleObjectProperty;
+import logic.entity.PlayerQueue;
 import logic.entity.Playlist;
 import logic.entity.Song;
 import logic.exception.SongNotExistsException;
@@ -26,14 +27,14 @@ public class Mp3Player {
     private final SimpleMinim minim;
     private SimpleAudioPlayer audioPlayer;
     private float currentVolume;
-    private SimpleObjectProperty<Song> currentSong;
     private volatile boolean skipWanted;
     private volatile boolean skipBackWanted;
     private volatile boolean paused;
     private volatile int indexOfSong;
     private Runnable songCompletelyPlayed;
-    private volatile ArrayList<Song> queue;
+    //private volatile ArrayList<Song> queue;
     private Playlist currentPlaylist;
+    private PlayerQueue queue;
 
     /**
      * TODO: lautstärke
@@ -41,10 +42,9 @@ public class Mp3Player {
     public Mp3Player(){
         minim = new SimpleMinim(true);
         PlaylistHandler.loadAllSongs();
+        queue = new PlayerQueue();
         indexOfSong = 0;
         currentVolume = 3;
-
-        currentSong = new SimpleObjectProperty<>(this, "currentSong");
     }
 
     /**
@@ -79,7 +79,7 @@ public class Mp3Player {
              */
             PlaylistHandler.loadPlaylist(name);
             currentPlaylist = PlaylistHandler.getPlaylists().get(name);
-            queue = currentPlaylist.getSongs();
+            //queue = currentPlaylist.getSongs();
             Collections.shuffle(queue);
 
             try {
@@ -99,10 +99,10 @@ public class Mp3Player {
             PlaylistHandler.loadPlaylist(name);
         } else {
             /**
-             * Fügt die Songs der Playlist zur Queue hinzu, mischt diese und Startet das Abspielen
+             * Fügt die Songs der Playlist zur Queue hinzu, mischt diese und startet das Abspielen
              */
             currentPlaylist = PlaylistHandler.getPlaylists().get(name);
-            queue = currentPlaylist.getSongs();
+            queue.addSongs(currentPlaylist.getSongs());
 
             try {
                 playQueue();
@@ -117,67 +117,63 @@ public class Mp3Player {
      */
     private void playQueue() {
         new Thread(() -> {
-            ListIterator<Song> iterator = queue.listIterator();
 
-            while (iterator.hasNext()) {
-                Song song = iterator.next();
+            Song song = queue.getCurrentSong();
+            if (song == null) {
+                return;
+            }
 
-                currentSong.set(song);
+            while (song != null) {
+
                 try {
-                    playSong(song.getTITLE(),0);
-                } catch (InvalidDataException e) {
-                    throw new RuntimeException(e);
-                } catch (UnsupportedTagException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                    playSong(song.getTITLE(), 0);
+                } catch (InvalidDataException | UnsupportedTagException | IOException e) {
                     throw new RuntimeException(e);
                 }
 
                 while (true) {
+
                     if (paused) {
                         audioPlayer.pause();
                         while (paused) {
-                            try { Thread.sleep(20); } catch (InterruptedException e) {}
+                            try { Thread.sleep(20); } catch (InterruptedException ignored) {}
                         }
                         audioPlayer.play();
                     }
 
                     if (skipWanted) {
                         skipWanted = false;
+                        song = queue.getNextSong();
                         break;
                     }
 
                     if (skipBackWanted) {
                         skipBackWanted = false;
-                        if (iterator.hasPrevious()) {
-                            iterator.previous();
-                            if(iterator.hasPrevious()){
-                                iterator.previous();
-                            }
-                            break;
-                        }
-                    }
-
-                    if (!audioPlayer.isPlaying()) {
+                        song = queue.getPreviousSong();
                         break;
                     }
 
-                    try { Thread.sleep(20); } catch (InterruptedException e) {}
-                }
-                indexOfSong++;
-            }
-        }).start();
+                    if (!audioPlayer.isPlaying()) {
+                        song = queue.getNextSong();
+                        break;
+                    }
 
-        //TODO Playlist beendet
+                    try { Thread.sleep(20); } catch (InterruptedException ignored) {}
+                }
+            }
+
+            // TODO Playlist beendet
+
+        }).start();
     }
 
     /**
      * Mischt die Queue durch
      */
     public void mixQueue() {
-        printQueue();
-        Collections.shuffle(queue);
-        printQueue();
+        queue.shuffleQueue();
+        System.out.println(queue);
+
     }
 
 
@@ -185,24 +181,11 @@ public class Mp3Player {
      * Macht das Mischen der Queue rückgängig und lässt sie ab dem aktuellen Song wieder in der vorherigen Reihenfolge spielen
      */
     public void unmixQueue() {
-        printQueue();
-        queue.clear();
-        queue = currentPlaylist.getSongs();
-        printQueue();
+        queue.unshuffleQueue();
+        System.out.println(queue);
     }
 
 
-
-    /**
-     * Funktion zum Ansehen der Queue in der Konsole
-     */
-    private void printQueue(){
-        String queueString = "Queue:\n";
-        for(Song s : queue){
-            queueString+="\t"+s.getTITLE()+"\n";
-        }
-        System.out.println(queueString);
-    }
 
     /**
      * Spielt einen Song ab
@@ -219,7 +202,7 @@ public class Mp3Player {
          * Laden + Abspielen des Songs
          */
         audioPlayer = minim.loadMP3File(SONG_PATH);
-        currentSong.setValue(loadSongMetaData(PlaylistHandler.removePathFromSongName(SONG_PATH)));
+        queue.currentSongProperty().setValue(loadSongMetaData(PlaylistHandler.removePathFromSongName(SONG_PATH)));
         audioPlayer.play(milliseconds);
         paused = false;
 
@@ -295,16 +278,14 @@ public class Mp3Player {
     /**
      * Methode zum Verändern der Position im Song
      * <br>
-     * -! aktuell nicht Lauffähig!
-     * @param ms neue Position im Song
      */
-    public void replaySong(int ms){
-        if(audioPlayer != null && currentSong != null){
-                audioPlayer.pause();
-                audioPlayer.rewind();
-                audioPlayer.play(ms);
-        }
+    public void replaySong(){
+        queue.setRepeat(true);
     }
+    public void stopReplaySong(){
+        queue.setRepeat(false);
+    }
+
 
     /**
      * Bricht das Spielen des aktuellen Songs ab
@@ -348,12 +329,9 @@ public class Mp3Player {
         audioPlayer.setGain(value);
     }
 
-    public final SimpleObjectProperty<Song> currentSongProperty() {
-        return this.currentSong;
-    }
 
     public final Song getCurrentSong() {
-        return this.currentSong.get();
+        return queue.getCurrentSong();
     }
 
     public float getCurrentVolume(){
