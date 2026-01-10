@@ -27,8 +27,8 @@ public class GraphViewPane extends StackPane{
         try {
             setPickOnBounds(false);
             g = new GraphEdgeList<>();
-            Image ima = new Image(new FileInputStream("C:\\Users\\MiniCoopa\\Desktop\\Studium zeug\\Semester 3\\ineratcive Anwendungen\\star-mp3\\StarMp3-Project\\app\\src\\main\\resources\\img\\stars\\star_blue.png"));
-            Image ima2 = new Image(new FileInputStream("C:\\Users\\MiniCoopa\\Desktop\\Studium zeug\\Semester 3\\ineratcive Anwendungen\\star-mp3\\StarMp3-Project\\app\\src\\main\\resources\\img\\stars\\star_blueON.png"));
+            Image ima = new Image(new FileInputStream("src/main/resources/img/stars/star_blue.png"));
+            Image ima2 = new Image(new FileInputStream("src/main/resources/img/stars/star_blueON.png"));
             Star2 a = new Star2(ima, ima2);
             a.setX(100);
             RotateTransition rotate = new RotateTransition();
