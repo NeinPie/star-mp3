@@ -3,20 +3,20 @@ package visual.components.main;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
-import javafx.scene.layout.*;
+import javafx.scene.layout.StackPane;
 import visual.components.BorderPaneWithBottomPanelBase;
 
 public class MainView extends BorderPaneWithBottomPanelBase {
 
     private final BooleanProperty playing = new SimpleBooleanProperty(false);
-    
+    GraphViewPane graphViewPane;
 
     public MainView() {
 
         setId("mainRoot");
 
         //center - graph
-        GraphViewPane graphViewPane = new GraphViewPane();
+        graphViewPane = new GraphViewPane();
         setCenter(graphViewPane);
 
         //settingsButton

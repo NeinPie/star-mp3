@@ -2,17 +2,22 @@ package visual.components.main;
 
 import com.brunomnsilva.smartgraph.graph.Graph;
 import com.brunomnsilva.smartgraph.graph.GraphEdgeList;
-import com.brunomnsilva.smartgraph.graphview.*;
+import com.brunomnsilva.smartgraph.graphview.SmartGraphPanel;
+import com.brunomnsilva.smartgraph.graphview.SmartPlacementStrategy;
+import com.brunomnsilva.smartgraph.graphview.SmartRandomPlacementStrategy;
+
 import javafx.geometry.Insets;
 import javafx.scene.layout.StackPane;
 
 public class GraphViewPane extends StackPane{
+    Graph<String, String> g;
+    SmartGraphPanel<String, String> graphView;
     public GraphViewPane() {
 
         setPickOnBounds(false);
-        Graph<String, String> g = new GraphEdgeList<>();
-
-        g.insertVertex("Alphabet");
+        g = new GraphEdgeList<>();
+        /*
+        g.insertVertex("Test");
         g.insertVertex("B");
         g.insertVertex("C");
         g.insertVertex("D");
@@ -30,6 +35,7 @@ public class GraphViewPane extends StackPane{
         g.insertEdge("F", "G", "GF");
         g.insertEdge("F", "H", "HF");
         g.insertEdge("H", "C", "HC");
+        */
 
         //        for(Vertex<String> vertex : g.vertices()){
        //
@@ -38,8 +44,7 @@ public class GraphViewPane extends StackPane{
         SmartPlacementStrategy placement =
                 new SmartRandomPlacementStrategy();
 
-        SmartGraphPanel<String, String> graphView =
-                new SmartGraphPanel<>(g, placement);
+        graphView = new SmartGraphPanel<>(g, placement);
         
 
         graphView.setPrefSize(700, 400);
