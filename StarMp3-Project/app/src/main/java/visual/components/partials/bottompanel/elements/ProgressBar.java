@@ -20,10 +20,10 @@ public class ProgressBar extends VBox {
         slider = new Slider();
         slider.getStyleClass().add("progress-slider"); 
 
-        currentTime = new Label("00:34");
+        currentTime = new Label("");
         currentTime.getStyleClass().add("time-label");
 
-        totalTime = new Label("03:23");
+        totalTime = new Label("");
         totalTime.getStyleClass().add("time-label");
         
         Region spacer = new Region();

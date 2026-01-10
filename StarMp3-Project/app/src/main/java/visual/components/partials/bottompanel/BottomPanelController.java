@@ -2,6 +2,7 @@ package visual.components.partials.bottompanel;
 
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import logic.Mp3Player;
@@ -92,7 +93,13 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
     private void initRepeatButton(){
         ToggleButton repeatButton = controlBar.getRepeatButton();
 
-        repeatButton.setOnAction(e -> System.out.println("Repeat button clicked (auch noch nicht fertig)"));
+        repeatButton.setOnAction(e -> {
+            if(repeatButton.isSelected()){
+                player.replaySong();
+            } else {
+                player.stopReplaySong();
+            }
+        });
     }
 
     private void initVolumeButton(){
@@ -118,8 +125,35 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
     }
 
     private void initProgressBar(){
-        progressBar.getSlider().valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
+//        progressBar.getSlider().valueProperty().addListener((obs, oldVal, newVal) -> {
+//            if (progressBar.getSlider().isValueChanging()) {
+//                try {
+//                    player.playSong(player.getCurrentSong().getTITLE(), newVal.intValue() * 1000);
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//        });
+
+
+        player.getCurrentTimeProperty().addListener((obs, oldVal, newVal) -> {
+            if (!progressBar.getSlider().isValueChanging()) {
+                Platform.runLater(() -> progressBar.getSlider().setValue(newVal.doubleValue()));
+            }
         });
+
+
+//        progressBar.getSlider().valueProperty().bind(player.getCurrentTimeProperty());
+//        progressBar.getSlider().maxProperty().bind(player.getTotalTimeProperty());
+        player.getCurrentTimeProperty().addListener((obs, o, n) -> Platform.runLater(() -> progressBar.setCurrentTime(timeFormat(n.intValue()))));
+        player.getTotalTimeProperty().addListener((obs, o, n) -> Platform.runLater(() -> progressBar.setTotalTime(timeFormat(n.intValue()))));
+    }
+
+    private String timeFormat(int seconds){
+        int min = (int)(seconds / 60);
+        seconds -= min*60;
+        String zero = "";
+        if(seconds < 10){zero = "0";}
+        return min +":"+zero +seconds;
     }
 }

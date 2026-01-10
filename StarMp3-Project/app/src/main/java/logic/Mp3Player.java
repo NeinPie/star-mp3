@@ -8,7 +8,10 @@ import ddf.minim.AudioMetaData;
 import ddf.minim.AudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.util.Duration;
 import logic.entity.PlayerQueue;
 import logic.entity.Playlist;
 import logic.entity.Song;
@@ -35,6 +38,9 @@ public class Mp3Player {
     //private volatile ArrayList<Song> queue;
     private Playlist currentPlaylist;
     private PlayerQueue queue;
+    private SimpleIntegerProperty currentTime;
+    private SimpleIntegerProperty totalTime;
+    private Timeline updateCurrentTimeTimeline;
 
     /**
      * TODO: lautstärke
@@ -43,6 +49,8 @@ public class Mp3Player {
         minim = new SimpleMinim(true);
         PlaylistHandler.loadAllSongs();
         queue = new PlayerQueue();
+        currentTime = new SimpleIntegerProperty();
+        totalTime = new SimpleIntegerProperty();
         indexOfSong = 0;
         currentVolume = 3;
     }
@@ -193,7 +201,12 @@ public class Mp3Player {
      * @param milliseconds Zeitpunkt, ab dem der Song abgespielt werden soll in Millisekunden
      */
     public void playSong(String songname, int milliseconds) throws InvalidDataException, UnsupportedTagException, IOException {
-        if(audioPlayer != null &&audioPlayer.isPlaying()){
+        if (updateCurrentTimeTimeline != null) {
+            updateCurrentTimeTimeline.stop();
+            updateCurrentTimeTimeline = null;
+        }
+
+        if (audioPlayer != null && audioPlayer.isPlaying()) {
             audioPlayer.pause();
         }
 
@@ -203,8 +216,20 @@ public class Mp3Player {
          */
         audioPlayer = minim.loadMP3File(SONG_PATH);
         queue.currentSongProperty().setValue(loadSongMetaData(PlaylistHandler.removePathFromSongName(SONG_PATH)));
+        currentTime.set(milliseconds/1000);
+        totalTime.set(queue.currentSongProperty().getValue().getFileLengthS());
         audioPlayer.play(milliseconds);
         paused = false;
+
+        updateCurrentTimeTimeline = new Timeline(
+                new KeyFrame(Duration.millis(200), e -> {
+                    if (audioPlayer != null && audioPlayer.isPlaying()) {
+                        currentTime.set(audioPlayer.position() / 1000);
+                    }
+                })
+        );
+        updateCurrentTimeTimeline.setCycleCount(Timeline.INDEFINITE);
+        updateCurrentTimeTimeline.play();
 
         /**
          * Eventuelles Abspielen der Queue, wenn vorhanden
@@ -280,9 +305,11 @@ public class Mp3Player {
      * <br>
      */
     public void replaySong(){
+        System.out.println("\"" + getCurrentSong().getTITLE()+"\"");
         queue.setRepeat(true);
     }
     public void stopReplaySong(){
+        System.out.println("Stop repeating \"" +getCurrentSong().getTITLE()+"\"");
         queue.setRepeat(false);
     }
 
@@ -295,6 +322,8 @@ public class Mp3Player {
             audioPlayer.pause();
             audioPlayer.rewind();
         }
+        currentTime.set(0);
+        totalTime.set(0);
     }
 
     /**
@@ -337,7 +366,11 @@ public class Mp3Player {
     public float getCurrentVolume(){
         return currentVolume;
     }
-    public List<Song> getQueue() {
-        return queue;
+
+    public SimpleIntegerProperty getCurrentTimeProperty(){
+        return currentTime;
+    }
+    public SimpleIntegerProperty getTotalTimeProperty(){
+        return totalTime;
     }
 }

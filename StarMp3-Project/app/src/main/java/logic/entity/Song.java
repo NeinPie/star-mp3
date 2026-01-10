@@ -1,5 +1,6 @@
 package logic.entity;
 
+import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 
 import java.io.ByteArrayInputStream;
@@ -125,5 +126,9 @@ public class Song {
         Image sceneImage = new Image(inStreambj);
 
         return sceneImage;
+    }
+
+    public int getFileLengthS() {
+        return getFileLengthMs()/1000;
     }
 }
