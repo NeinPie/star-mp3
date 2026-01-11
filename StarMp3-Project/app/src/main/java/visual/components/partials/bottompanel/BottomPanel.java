@@ -9,18 +9,18 @@ import javafx.scene.layout.VBox;
 import visual.components.partials.bottompanel.elements.ControlBar;
 import visual.components.partials.bottompanel.elements.LikeButton;
 import visual.components.partials.bottompanel.elements.ProgressBar;
-import visual.components.partials.bottompanel.elements.VolumeButton;
+import visual.components.partials.bottompanel.elements.VolumeBar;
 
 public class BottomPanel extends BorderPane {
     ControlBar controls;
-    Button volumeButton;
+    VolumeBar volumeButton;
     ToggleButton likeButton;
     ProgressBar progressBar;
 
     public BottomPanel() {
         controls = new ControlBar();
 
-        volumeButton = new VolumeButton();
+        volumeButton = new VolumeBar();
         likeButton = new LikeButton();
         progressBar = new ProgressBar();
 

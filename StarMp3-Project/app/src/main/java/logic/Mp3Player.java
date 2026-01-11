@@ -353,9 +353,15 @@ public class Mp3Player {
      * Setzt Lautstärke des Spielers
      * @param value Wert für das neue Gain des AudioPlayers
      */
-    public void volume(float value){
-        currentVolume = value;
-        audioPlayer.setGain(value);
+    public void volume(float linearValue){
+        currentVolume = linearValue;
+        float gainDb;
+        if (linearValue == 0) {
+             gainDb = -80f; // mute
+        } else {
+             gainDb = 20f * (float)Math.log10(linearValue);
+        }
+        audioPlayer.setGain(gainDb);
     }
 
 

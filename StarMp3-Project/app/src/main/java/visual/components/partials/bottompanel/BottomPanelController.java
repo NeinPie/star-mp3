@@ -10,13 +10,14 @@ import logic.handler.M3uHandler;
 import visual.components.ControllerBase;
 import visual.components.partials.bottompanel.elements.ControlBar;
 import visual.components.partials.bottompanel.elements.ProgressBar;
+import visual.components.partials.bottompanel.elements.VolumeBar;
 
 import java.io.IOException;
 
 public class BottomPanelController extends ControllerBase<BottomPanel> {
     private Mp3Player player;
     private ControlBar controlBar;
-    private Button volumeButton;
+    private VolumeBar volumeBar;
     private ToggleButton likeButton;
     private ProgressBar progressBar;
 
@@ -26,7 +27,7 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
 
         this.player = player;
         controlBar = root.controls;
-        volumeButton = root.volumeButton;
+        volumeBar = root.volumeButton;;
         likeButton = root.likeButton;
         progressBar = root.progressBar;
 
@@ -103,7 +104,19 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
     }
 
     private void initVolumeButton(){
-        volumeButton.setOnAction(e -> System.out.println("Volume button clicked"));
+        volumeBar.volumeProperty().addListener((obs, oldVal, newVal) -> {
+        float linearValue = newVal.floatValue();
+
+        player.volume(linearValue);
+
+        if (linearValue == 0) {
+            volumeBar.updateVolumeIcon(true);
+        } else {
+            volumeBar.updateVolumeIcon(false);
+        }
+    });
+
+         volumeBar.getButton().setOnAction(e -> System.out.println("Volume button clicked"));
     }
 
     private void initLikeButton(){

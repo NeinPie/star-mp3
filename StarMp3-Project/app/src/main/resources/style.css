@@ -26,10 +26,20 @@
 /* VOLUME BUTTON */
 #volume-button.icon-button {
     -fx-background-image: url("/img/icons/volume.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }
 
 #volume-button.icon-button:hover {
     -fx-background-image: url("/img/icons/volumeHOVER.png");
+}
+
+#volume-button.muted {
+    -fx-background-image: url("/img/icons/volumeOFF.png");
+}
+
+#volume-button.muted:hover {
+    -fx-background-image: url("/img/icons/volumeOFFHOVER.png");
 }
 
 /* SETTINGS BUTTON */
@@ -151,4 +161,23 @@
 .bottom-bar {
     -fx-background-image: url("/img/bottom-bar.PNG");
     -fx-background-size: 960px 100px;
+}
+
+/* VOLUME SLIDER */
+#volume-slider {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+#volume-slider .track {
+    -fx-background-color: #888;
+    -fx-background-radius: 3;
+    -fx-pref-width: 4;
+}
+
+#volume-slider .thumb {
+    -fx-background-color: #00bfff;
+    -fx-background-radius: 6;
+    -fx-pref-width: 12;
+    -fx-pref-height: 12;
 }
