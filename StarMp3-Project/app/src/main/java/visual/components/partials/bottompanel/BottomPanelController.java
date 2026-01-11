@@ -4,6 +4,7 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import logic.Mp3Player;
 import logic.handler.M3uHandler;
@@ -138,28 +139,38 @@ public class BottomPanelController extends ControllerBase<BottomPanel> {
     }
 
     private void initProgressBar(){
-//        progressBar.getSlider().valueProperty().addListener((obs, oldVal, newVal) -> {
-//            if (progressBar.getSlider().isValueChanging()) {
-//                try {
-//                    player.playSong(player.getCurrentSong().getTITLE(), newVal.intValue() * 1000);
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//        });
+         Slider slider = progressBar.getSlider();
+    
+         player.getTotalTimeProperty().addListener((obs, o, n) ->
+             Platform.runLater(() -> slider.setMax(n.doubleValue()))
+        );
 
+         player.getCurrentTimeProperty().addListener((obs, o, n) -> {
+             if (!slider.isValueChanging()) {
+                 Platform.runLater(() -> slider.setValue(n.doubleValue()));
+             }
+        });
 
-        player.getCurrentTimeProperty().addListener((obs, oldVal, newVal) -> {
-            if (!progressBar.getSlider().isValueChanging()) {
-                Platform.runLater(() -> progressBar.getSlider().setValue(newVal.doubleValue()));
+    // Benutzer lässt den Slider los → Song wird an diese Position gesprungen
+         slider.setOnMouseReleased(e -> {
+             if (player.getCurrentSong() != null) {
+                 player.skipTo((int) slider.getValue());
             }
         });
 
+    // Anzeige der aktuellen Wiedergabezeit
+         player.getCurrentTimeProperty().addListener((obs, o, n) ->
+              Platform.runLater(() ->
+                 progressBar.setCurrentTime(timeFormat(n.intValue()))
+             )
+         );
 
-//        progressBar.getSlider().valueProperty().bind(player.getCurrentTimeProperty());
-//        progressBar.getSlider().maxProperty().bind(player.getTotalTimeProperty());
-        player.getCurrentTimeProperty().addListener((obs, o, n) -> Platform.runLater(() -> progressBar.setCurrentTime(timeFormat(n.intValue()))));
-        player.getTotalTimeProperty().addListener((obs, o, n) -> Platform.runLater(() -> progressBar.setTotalTime(timeFormat(n.intValue()))));
+    // Anzeige der gesamten Songlänge
+         player.getTotalTimeProperty().addListener((obs, o, n) ->
+              Platform.runLater(() ->
+                 progressBar.setTotalTime(timeFormat(n.intValue()))
+             )
+         );
     }
 
     private String timeFormat(int seconds){

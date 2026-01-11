@@ -10,6 +10,7 @@ import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Duration;
 import logic.entity.PlayerQueue;
@@ -41,10 +42,9 @@ public class Mp3Player {
     private SimpleIntegerProperty currentTime;
     private SimpleIntegerProperty totalTime;
     private Timeline updateCurrentTimeTimeline;
+    private volatile boolean seeking;
 
-    /**
-     * TODO: lautstärke
-     */
+ 
     public Mp3Player(){
         minim = new SimpleMinim(true);
         PlaylistHandler.loadAllSongs();
@@ -161,7 +161,7 @@ public class Mp3Player {
                         break;
                     }
 
-                    if (!audioPlayer.isPlaying()) {
+                    if (!audioPlayer.isPlaying()  && !seeking) {
                         song = queue.getNextSong();
                         break;
                     }
@@ -228,6 +228,7 @@ public class Mp3Player {
                     }
                 })
         );
+
         updateCurrentTimeTimeline.setCycleCount(Timeline.INDEFINITE);
         updateCurrentTimeTimeline.play();
 
@@ -344,11 +345,35 @@ public class Mp3Player {
         audioPlayer.pause();
     }
 
+     /**
+     * Springt zu einer bestimmten Position im aktuellen Song
+     *
+     * @param seconds Position im Song in Sekunden
+     */
+    public void skipTo(int seconds) {
+         if (audioPlayer == null || getCurrentSong() == null) return;
 
+         seeking = true;
+         int millis = seconds * 1000;
+
+         // Schutz vor ungültigen Positionen
+         millis = Math.max(0, Math.min(millis, getCurrentSong().getFileLengthMs()));
+
+         boolean wasPaused = paused;
+
+         audioPlayer.pause();
+         audioPlayer.play(millis);
+
+        if (wasPaused) {
+        audioPlayer.pause();
+        }
+
+        currentTime.set(seconds);
+        seeking = false;
+    }
 
 
     /**
-     * TODO Linear
      *
      * Setzt Lautstärke des Spielers
      * @param value Wert für das neue Gain des AudioPlayers
